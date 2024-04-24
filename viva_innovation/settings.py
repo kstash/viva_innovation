@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +75,26 @@ WSGI_APPLICATION = 'viva_innovation.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': True,
+        'LOGGING': {
+            'version': 1,
+            'loggers': {
+                'djongo': {
+                    'level': 'DEBUG',
+                    'propogate': False,
+                }
+            }
+        },
+        'NAME': 'viva_innovation',
+        'CLIENT': {
+            'host': '127.0.0.1',
+            'port': 27017,
+            'username': 'admin',
+            'password': 'password',
+            'authSource': 'admin',
+            'authMechanism': 'SCRAM-SHA-1'
+        }
     }
 }
 
