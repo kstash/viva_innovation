@@ -1,15 +1,15 @@
 from datetime import datetime
 from beanie import PydanticObjectId
-from fastapi.security import HTTPBasicCredentials
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, constr, validator
+from validators.user import validate_password
 
 
 class UserOut(BaseModel):
     id: PydanticObjectId
     name: str
     email: EmailStr
-    created_at: datetime = datetime.now()
-    updated_at: datetime = datetime.now()
+    created_at: datetime
+    updated_at: datetime | None
 
     class Collection:
         name = "user"
@@ -39,24 +39,10 @@ class UserLogin(BaseModel):
         }
 
 
-class UserSignUp(BaseModel):
-    name: str
-    email: EmailStr
-    password: str
-
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "name": "John Doe",
-                "email": "john@example.com",
-                "password": "password123!@",
-            }
-        }
-
-
 class UserUpdate(BaseModel):
     name: str
-    password: str
+    password: constr(min_length=8)
+    updated_at: datetime = datetime.now()
 
     class Config:
         json_schema_extra = {
@@ -65,3 +51,5 @@ class UserUpdate(BaseModel):
                 "password": "password123!@",
             }
         }
+    
+    _validate_password = validator("password", allow_reuse=True)(validate_password)

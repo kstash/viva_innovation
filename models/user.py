@@ -1,11 +1,14 @@
 from datetime import datetime
 from beanie import Document
-from pydantic import EmailStr
+from pydantic import EmailStr, constr, validator
+
+from validators.user import validate_password
+
 
 class User(Document):
     name: str
     email: EmailStr
-    password: str
+    password: constr(min_length=8)
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
     
@@ -22,3 +25,5 @@ class User(Document):
                 "updated_at": "2022-01-01T00:00:00",
             }
         }
+
+    _validate_password = validator("password", allow_reuse=True)(validate_password)

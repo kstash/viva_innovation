@@ -12,4 +12,4 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # pagination으로 게시글 가져오기
 @board.get('/', response_description='Get boards')
 async def get_boards(data):
-    await Board
+    await Board.find_many()
