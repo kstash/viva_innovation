@@ -19,7 +19,6 @@ async def find_all_users() -> list:
     return users
 
 
-# TODO: 비밀번호 제한 조건 추가
 @user.post('/', response_description='Created user', response_model=UserOut)
 async def create_user(user: User = Body(...)):
     user_exists = await User.find_one(User.email == user.email)
@@ -35,7 +34,6 @@ async def create_user(user: User = Body(...)):
     return new_user
 
 
-# 사용자 로그인시
 @user.post('/login', response_description='Login user')
 async def create_user(user: UserLogin = Body(...)):
     user_exists = await User.find_one(User.email == user.email)
