@@ -25,7 +25,6 @@ class Settings(BaseSettings):
 
 
 async def init_db():
-    print(Settings())
     client = AsyncIOMotorClient(Settings().DATABASE_URL)
 
     await init_beanie(

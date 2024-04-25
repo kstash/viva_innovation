@@ -1,6 +1,6 @@
 from datetime import datetime
 from beanie import PydanticObjectId
-from pydantic import BaseModel, EmailStr, constr, validator
+from pydantic import BaseModel, EmailStr, Field, constr, validator
 from validators.user import validate_password
 
 
@@ -9,7 +9,7 @@ class UserOut(BaseModel):
     name: str
     email: EmailStr
     created_at: datetime
-    updated_at: datetime | None
+    updated_at: datetime
 
     class Collection:
         name = "user"

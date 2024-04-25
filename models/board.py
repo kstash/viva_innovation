@@ -1,12 +1,15 @@
 from datetime import datetime
-from beanie import Document
+from typing import Optional
+from beanie import Document, PydanticObjectId
 
 from models.user import User
 
 class Board(Document):
     title: str
     content: str | None
-    author: User
+    author_id: Optional[PydanticObjectId] = None
+    created_at: datetime = datetime.now()
+    updated_at: datetime = datetime.now()
     
     class Settings:
         name = "board"
@@ -16,12 +19,7 @@ class Board(Document):
             "example": {
                 "title": "sample title",
                 "content": "sample content",
-                "author": {
-                    "name": "sample name",
-                    "email": "sample@email.com",
-                    "created_at": "2022-01-01T00:00:00",
-                    "updated_at": "2022-01-01T00:00:00",
-                },
+                "author_id": "sample id",
                 "created_at": "2022-01-01T00:00:00",
                 "updated_at": "2022-01-01T00:00:00",
             }
