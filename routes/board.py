@@ -24,10 +24,9 @@ async def create_board(board_data: Board, current_user: User = Depends(get_curre
 
 
 # pagination으로 게시글 가져오기
-# >>> 따로 이야기는 없었으나 일반적으로 리스트를 전부 가져오는 경우는 없다고 생각하므로 추가함
 @board.get('/', response_description='Get boards', response_model=List[BoardOut], tags=["board"])
 async def get_boards(skip: int = 0, limit: int = 10):
-    boards = await Board.find().skip(skip).limit(limit).to_list()
+    boards = await Board.find().skip(skip).limit(limit).sort(-Board.views).to_list()
         
     return boards
 
