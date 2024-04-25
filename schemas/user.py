@@ -4,11 +4,10 @@ from fastapi.security import HTTPBasicCredentials
 from pydantic import BaseModel, EmailStr
 
 
-class UserModel(BaseModel):
+class UserOut(BaseModel):
     id: PydanticObjectId
     name: str
     email: EmailStr
-    password: str
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
 
@@ -21,11 +20,11 @@ class UserModel(BaseModel):
                 "id": "user id",
                 "name": "John Doe",
                 "email": "john@example.com",
-                "password": "password123!@",
                 "created_at": "2022-01-01T00:00:00",
                 "updated_at": "2022-01-01T00:00:00",
             }
         }
+
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -50,6 +49,19 @@ class UserSignUp(BaseModel):
             "example": {
                 "name": "John Doe",
                 "email": "john@example.com",
+                "password": "password123!@",
+            }
+        }
+
+
+class UserUpdate(BaseModel):
+    name: str
+    password: str
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "name": "John Doe",
                 "password": "password123!@",
             }
         }
