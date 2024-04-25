@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     # JWT
     JWT_SECRET_KEY: str = "secretKey"
     JWT_ALGORITHM: str = "HS256"
+    JWT_ACCESS_TOKEN_EXP_HR: int = 1
+    JWT_REFRESH_TOKEN_EXP_HR: int = 24
 
     class Config:
         env_file = ".env.dev"
