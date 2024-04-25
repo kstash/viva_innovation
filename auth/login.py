@@ -9,7 +9,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 async def validate_login(credentials: HTTPBasicCredentials = Depends(security)):
-    user = User.find_one({"email": credentials.username})
+    user = User.find_one(User.email == credentials.username)
     if user:
         password = pwd_context.verify(credentials.password, user["password"])
         if not password:
